@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parking Owner Login</title>
+</head>
+<body>
+  <h2>Login as Parking Owner</h2>
+  <form id="loginForm">
+    <label for="parkingName">Parking Spot Name</label>
+    <input type="text" id="parkingName" required><br><br>
+    <button type="submit">Login</button>
+  </form>
+
+  <script>
+    // Simple login simulation
+    document.getElementById("loginForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+      const parkingName = document.getElementById("parkingName").value;
+      // Simulate login success and redirect to dashboard
+      localStorage.setItem("ownerParkingName", parkingName); // Store parking name in localStorage
+      window.location.href = "ownDashboard.html"; // Redirect to dashboard page
+    });
+  </script>
+</body>
+</html>

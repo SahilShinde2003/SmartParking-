@@ -1,0 +1,78 @@
+import RPi.GPIO as GPIO
+import time
+from RPLCD.i2c import CharLCD
+
+# GPIO pin setup
+GPIO.setmode(GPIO.BCM)
+IR_ENTRY = 17
+IR_EXIT = 27
+PARKING_SENSORS = [22, 23, 24, 25]
+SERVO_PIN = 21
+
+# LCD setup
+lcd = CharLCD('PCF8574', 0x27)
+
+# Initialize servo motor
+GPIO.setup(SERVO_PIN, GPIO.OUT)
+servo = GPIO.PWM(SERVO_PIN, 50)
+servo.start(12)  # Gate initially closed
+
+# IR sensor setup
+GPIO.setup(IR_ENTRY, GPIO.IN)
+GPIO.setup(IR_EXIT, GPIO.IN)
+for pin in PARKING_SENSORS:
+    GPIO.setup(pin, GPIO.IN)
+
+# Initial parking status
+parking_slots = ["Empty"] * len(PARKING_SENSORS)
+
+def control_gate(open_gate):
+    duty_cycle = 7 if open_gate else 12  # Adjust for open/close positions
+    servo.ChangeDutyCycle(duty_cycle)
+    time.sleep(3)
+
+def update_parking_status():
+    for i, pin in enumerate(PARKING_SENSORS):
+        parking_slots[i] = "Full" if GPIO.input(pin) == GPIO.LOW else "Empty"
+
+def display_status():
+    lcd.clear()
+   
+    # Create slot number and status pairs
+    status_pattern = " ".join(
+        f"{i + 1}:{'e' if status == 'Empty' else 'f'}"
+        for i, status in enumerate(parking_slots)
+    )
+   
+    # Write the pattern to the LCD
+    lcd.write_string(status_pattern)
+   
+    time.sleep(1)
+
+try:
+    while True:
+        update_parking_status()
+        display_status()
+       
+        # Entry logic
+        if GPIO.input(IR_ENTRY) == GPIO.LOW and "Empty" in parking_slots:
+            control_gate(True)  # Open gate
+            while GPIO.input(IR_EXIT) == GPIO.LOW:  # Wait for car to pass
+                time.sleep(0.1)
+            control_gate(False)  # Close gate
+
+        # Exit logic
+        if GPIO.input(IR_EXIT) == GPIO.LOW:
+            control_gate(True)  # Open gate
+            while GPIO.input(IR_ENTRY) == GPIO.HIGH:  # Wait for car to pass
+                time.sleep(0.1)
+            control_gate(False)  # Close gate
+
+        time.sleep(1)
+
+except KeyboardInterrupt:
+    print("Program stopped")
+finally:
+    servo.stop()
+    GPIO.cleanup()
+

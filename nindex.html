@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Parking System</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDNJtNhD58VY9YiV1zaHzdnbTESBU3fOv0&libraries=places&callback=initMap" async defer></script>
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places&callback=initMap" async defer></script> -->
+
+    <style>
+
+#map {
+      height: 500px;
+      width: 100%;
+    }
+        /* Global Styles */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        /* Header */
+        header {
+            background-color: #1e90ff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+
+        /* Navigation bar */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #333;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1em;
+        }
+
+        nav input[type="text"] {
+            padding: 5px;
+            font-size: 1em;
+        }
+
+        nav input[type="submit"] {
+            background-color: #1e90ff;
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        /* Main content with map */
+        main {
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 70vh;
+            background-color: #e0e0e0;
+        }
+
+        #map {
+            width: 80%;
+            height: 100%;
+            background-color: #ddd;
+            
+        }
+
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        footer ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        footer ul li {
+            padding: 5px 0;
+        }
+
+        footer ul li a {
+            color: #1e90ff;
+            text-decoration: none;
+        }
+    </style>
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3E5Oa68_J4t4-4530RD0h_IA532wZn_8&callback=initMap" async defer>
+         function initMap() {
+    // Create a map object centered on Pune
+    var pune = { lat: 18.5204, lng: 73.8567 };
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 12,
+      center: pune
+    });
+
+    // Example: Add a marker for a parking location
+    var parkingLocation = { lat: 18.5304, lng: 73.8477 };
+    var marker = new google.maps.Marker({
+      position: parkingLocation,
+      map: map,
+      title: "Parking Spot"
+    });
+
+    // Add click event listener to the marker
+    marker.addListener('click', function() {
+      alert('Parking spot clicked!');
+    });
+  }
+    </script> -->
+
+</head>
+<body>
+
+    
+    <!-- Header Section -->
+    <header>
+        <h1>Smart Parking System</h1>
+    </header>
+
+    <!-- Navigation bar with Search -->
+    <nav>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="LoginPage.html">Sign in</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="ownDashboard.html" target="_blank">Login as Admin</a></li>
+        </ul>
+        <div>
+            <input id="searchBox" type="text" placeholder="Search for parking...">
+            <input type="submit" value="Search">
+        </div>
+    </nav>
+
+    <!-- Main Section with Map -->
+    <main>
+        <div id="map" style="height: 545px; width: 100%;"></div>
+
+    </main>
+
+    <!-- Footer Section -->
+    <footer>
+      
+        <h2>Nearby Parking Slots</h3>
+        <ul>
+            <h3><li><a href="#">1 - Parking Facility Metropale</a></li></h3>
+            <h3><li><a href="#">2 - PMC Car & Bike Parking</a></li></h3>
+            <h3><li><a href="#">3 - Katraj Parking</a></li></h3>
+            <h3><li><a href="#">4 - Parking Lot, Market Yard</a></li></h3>
+        </ul>
+    </footer>
+    <script src="script.js"></script>
+   <script src="search.js"></script>
+   <!-- <script src="goto.js"></script>-->
+    
+</body>
+</html>
